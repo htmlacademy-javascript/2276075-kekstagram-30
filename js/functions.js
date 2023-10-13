@@ -1,6 +1,6 @@
 //функция для проверки длины строки
-function checksLength (string, number) {
-  return string.length <= number;
+function checksLength (string, symbols) {
+  return string.length <= symbols;
 }
 
 checksLength('проверяемая строка', 20);
@@ -26,4 +26,5 @@ function getNumber (string) {
       number += string.at(i);
     }
   }
+  return (number === '') ? NaN : Number(number);
 }

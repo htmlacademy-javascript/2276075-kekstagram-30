@@ -1,6 +1,6 @@
 //функция для проверки длины строки
-function checksLength (string, symbols) {
-  return string.length <= symbols;
+function checksLength (string, targetLength) {
+  return string.length <= targetLength;
 }
 
 checksLength('проверяемая строка', 20);

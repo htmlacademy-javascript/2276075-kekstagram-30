@@ -1,8 +1,9 @@
+import { createBigPicture } from "./create-big-pictures";
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const container = document.querySelector('.pictures');
 
 const createPicture = ({url, description, comments, likes}) => {
-  const picture = pictureTemplate.cloneNode(true);
+  const pictureElement = pictureTemplate.cloneNode(true);
 
   picture.querySelector('.picture__img').src = url;
   picture.querySelector('.picture__img').alt = description;
@@ -17,6 +18,10 @@ const renderPicture = (pictures) => {
 
   pictures.forEach((picture) => {
     const creatingPicture = createPicture(picture);
+    pictureElement.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      createBigPicture(picture);
+    });
     fragment.append(picture);
   });
 

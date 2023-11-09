@@ -25,12 +25,7 @@ function closeUserModal () {
   userModalElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', userModalCloseElement);
 };
-
-userModalOpenElement.addEventListener('click', () => {
-  openUserModal();
-});
 
 userModalCloseElement.addEventListener('click', () => {
   closeUserModal();

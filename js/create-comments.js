@@ -23,9 +23,9 @@ const renderComments = (comments) => {
   commentListElement.append(fragment);
 };
 
-const initCommentsList () => {
+function initCommentsList () {
   commentCountElement.classList.add('hidden');
   commentLoaderElement.classList.add('hidden');
-};
+}
 
 export {renderComments, initCommentsList};

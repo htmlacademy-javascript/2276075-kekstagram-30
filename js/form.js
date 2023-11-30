@@ -1,5 +1,6 @@
 import { onEscapeKey } from "./util";
 import { resetScale, onSmallButtonClick, onBigButtonClick } from "./scale-img";
+import { resetEffect, onRadioClick } from "./effect";
 const form = document.querySelector('.img-upload__form');
 const uploadFormInput = form.querySelector('.img-upload__input');
 const uploadFormOverlay = form.querySelector('.img-upload__overlay');
@@ -8,6 +9,7 @@ const inputHashtags = document.querySelector('.text__hashtags');
 const inputDescription = document.querySelector('.text__description');
 const smallButton = document.querySelector('.scale__control--smaller');
 const bigButton = document.querySelector('.scale__control--bigger');
+const effectList = document.querySelector('.effects__list');
 
 const MAX_LENGHT_COMMENTS = 140;
 const HASHTAG__VALID = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -34,11 +36,13 @@ function openForm () {
   document.addEventListener('keydown', onDocumentKeydown);
   smallButton.addEventListener('click', onSmallButtonClick);
   bigButton.addEventListener('click', onBigButtonClick);
+  effectList.addEventListener('click', onRadioClick);
   inputHashtags.value = '';
   inputDescription.value = '';
   uploadFormInput.value = '';
   pristine.reset();
   resetScale();
+  resetEffect();
 }
 
 function closeForm () {
@@ -47,6 +51,9 @@ function closeForm () {
   document.removeEventListener('keydown', onDocumentKeydown);
   smallButton.removeEventListener('click', onSmallButtonClick);
   bigButton.removeEventListener('click', onBigButtonClick);
+  effectList.removeEventListener('click', onRadioClick);
+  form.reset();
+  pristine.reset();
 }
 
 function normalizeTags(tagString) {

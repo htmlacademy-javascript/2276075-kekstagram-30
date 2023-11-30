@@ -1,10 +1,13 @@
 import { onEscapeKey } from "./util";
+import { resetScale, onSmallButtonClick, onBigButtonClick } from "./scale-img";
 const form = document.querySelector('.img-upload__form');
 const uploadFormInput = form.querySelector('.img-upload__input');
 const uploadFormOverlay = form.querySelector('.img-upload__overlay');
 const uploadFormCancel = form.querySelector('.img-upload__cancel');
 const inputHashtags = document.querySelector('.text__hashtags');
 const inputDescription = document.querySelector('.text__description');
+const smallButton = document.querySelector('.scale__control--smaller');
+const bigButton = document.querySelector('.scale__control--bigger');
 
 const MAX_LENGHT_COMMENTS = 140;
 const HASHTAG__VALID = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -29,16 +32,21 @@ function openForm () {
   uploadFormOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+  smallButton.addEventListener('click', onSmallButtonClick);
+  bigButton.addEventListener('click', onBigButtonClick);
   inputHashtags.value = '';
   inputDescription.value = '';
   uploadFormInput.value = '';
   pristine.reset();
+  resetScale();
 }
 
 function closeForm () {
   uploadFormOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  smallButton.removeEventListener('click', onSmallButtonClick);
+  bigButton.removeEventListener('click', onBigButtonClick);
 }
 
 function normalizeTags(tagString) {

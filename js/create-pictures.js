@@ -1,4 +1,6 @@
 import { createBigPicture } from "./create-big-pictures";
+import { loadPicture } from "./api";
+import { showMessageloadError } from './message';
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const container = document.querySelector('.pictures');
 
@@ -12,6 +14,14 @@ const createPicture = ({url, description, comments, likes}) => {
 
   return picture;
 };
+
+try {
+  let pictures = {};
+  pictures = await loadPicture();
+  createPicture(pictures);
+} catch {
+  showMessageloadError();
+}
 
 const renderPicture = (pictures) => {
   const fragment = document.createDocumentFragment();

@@ -1,6 +1,9 @@
-import { onEscapeKey } from "./util";
+import { onEscapeKey, isEscapeKey } from "./util";
 import { resetScale, onSmallButtonClick, onBigButtonClick } from "./scale-img";
 import { resetEffect, onRadioClick } from "./effect";
+import { sendPicture } from "./api";
+import { showMessageSuccess, showMessageError } from './message';
+const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const uploadFormInput = form.querySelector('.img-upload__input');
 const uploadFormOverlay = form.querySelector('.img-upload__overlay');
@@ -98,11 +101,21 @@ pristine.addValidator(inputHashtags, validateCountHashtag, 'превышено �
 pristine.addValidator(inputHashtags, validateHashtag, 'введён невалидный хэш-тег', 2, true);
 pristine.addValidator(inputHashtags, validateUniqueHashtag, 'хэш-теги повторяются', 3, true);
 
-form.addEventListener('sumbit', (evt) => {
-  evt.preventDefault();
+async function onFormSumbit(evt) {
   arrayTags = normalizeTags(inputHashtags.value);
-  pristine.validate();
-});
+  const isValid = pristine.validate();
+  evt.preventDefault();
+
+  if (isValid) {
+    try{
+      await sendPicture (new FormData(evt.target));
+      closeForm();
+      showMessageSuccess();
+    } catch {
+      showMessageError();
+    }
+  }
+}
 
 function onInputChange() {
   openForm();
@@ -111,9 +124,30 @@ function onInputChange() {
 function onClickCancel() {
   closeForm();
 }
+function isOpenError () {
+  if(body.querySelector('.error__inner')) {
+    return false;
+  }
+  return true;
+}
+
+function onEscapeError () {
+  if(body.querySelector('.error__inner')) {
+    return false;
+  }
+  return true;
+}
+
+function onEscapeKeydown(evt) {
+  if (isEscapeKey(evt) && !(document.activeElement === inputHashtags || document.activeElement === inputDescription) && isOpenError()) {
+    evt.preventDefault();
+    closeForm();
+  }
+}
 
 function showForm() {
   uploadFormInput.addEventListener('change', onInputChange);
+  form.addEventListener('sumbit', onFormSumbit);
   uploadFormCancel.addEventListener('click', onClickCancel);
 }
 

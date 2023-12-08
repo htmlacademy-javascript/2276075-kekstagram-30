@@ -1,3 +1,4 @@
+/*
 import { getRandomInteger, getRandomElement, createIdGenerator} from "./util.js";
 
 const DESCRIPTIONS = [
@@ -55,3 +56,4 @@ const createObject = (nom) => {
 };
 
  export {createObject};
+*/
